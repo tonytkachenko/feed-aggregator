@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "main": "src/index.ts",
+  "name": "feed-aggregator",
+  "compatibility_date": "2025-09-27"
+}
