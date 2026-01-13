@@ -32,7 +32,7 @@ export class XMLProcessor {
 
       const items = parsed?.rss?.channel?.item;
 
-      if (!items) return [];
+      if (!items) throw new Error("No items found in feed");
 
       return Array.isArray(items) ? items : [items];
     } catch (error) {

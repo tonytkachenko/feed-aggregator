@@ -40,11 +40,15 @@ Errors:
 { "error": "message" }
 ```
 
+### GET /logs/:key
+Returns the last 200 lines of PM2 logs. The `:key` value must match `LOGS_ACCESS_KEY`.
+
 ## Configuration
 
 Environment variables (see `.env.example`):
 - `REQUEST_TIMEOUT_MS` (default: 15000)
 - `NODE_ENV` (`development` or `production`)
+- `LOGS_ACCESS_KEY` (required, access token for `/logs/:key`)
 
 ## Development
 

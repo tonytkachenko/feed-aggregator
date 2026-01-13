@@ -7,12 +7,24 @@ const config = getConfig();
 
 const isProd = config.NODE_ENV === "production";
 const level = isProd ? "info" : "debug";
+const errorSerializer = isProd
+  ? (err: unknown) => {
+      if (err instanceof Error) {
+        return { type: err.name, message: err.message };
+      }
+      if (err && typeof err === "object" && "message" in err) {
+        return { message: String((err as { message?: unknown }).message) };
+      }
+      return { message: String(err) };
+    }
+  : pino.stdSerializers.err;
 
 export const logger = pino(
   {
     level,
     base: null,
     browser: { asObject: true },
+    serializers: { err: errorSerializer },
   },
   isProd
     ? undefined

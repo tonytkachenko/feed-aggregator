@@ -1,5 +1,6 @@
 import type { AggregationMetadata, ProductItem } from "../types.js";
 import { FeedLoader } from "./feed-loader.js";
+import { logger } from "./logger.js";
 import { XMLProcessor } from "./xml-processor.js";
 
 export class FeedAggregator {
@@ -62,8 +63,13 @@ export class FeedAggregator {
 	}
 
 	private async processFeed(url: string): Promise<ProductItem[]> {
-		const content = await this.loader.fetch(url);
-		const items = this.xml.parse(content);
-		return items;
+		try {
+			const content = await this.loader.fetch(url);
+			const items = this.xml.parse(content);
+			return items;
+		} catch (error) {
+			logger.error({ err: error, url }, "Feed processing error");
+			throw error;
+		}
 	}
 }
